@@ -213,13 +213,13 @@ if (statNumbers.length > 0 && 'IntersectionObserver' in window) {
   statNumbers.forEach((el) => counterObserver.observe(el));
 }
 
-/* ---------- 7. Contact form validation ---------- */
+/* ---------- 7. Contact form validation + Formspree submission ---------- */
 const contactForm = document.getElementById('contactForm');
 const contactStatus = document.getElementById('contactStatus');
 
 if (contactForm && contactStatus) {
   contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    e.preventDefault(); // stop the normal page reload/redirect either way
 
     const name = document.getElementById('name');
     const email = document.getElementById('email');
@@ -231,18 +231,38 @@ if (contactForm && contactStatus) {
     const emailValid = email && emailPattern.test(email.value.trim());
     const messageValid = message && message.value.trim().length > 5;
 
-    if (nameValid && emailValid && messageValid) {
-      contactStatus.textContent = "Thanks — your message has been sent. We'll reply within 1-2 business days.";
-      contactStatus.className = 'form-status success';
-      contactForm.reset();
-
-      // NOTE: This is front-end only. To actually RECEIVE these messages,
-      // connect this form to a service like Formspree (https://formspree.io)
-      // by setting the form's action attribute to your Formspree endpoint.
-    } else {
+    if (!(nameValid && emailValid && messageValid)) {
       contactStatus.textContent = 'Please fill in your name, a valid email, and a message before sending.';
       contactStatus.className = 'form-status error';
+      return;
     }
+
+    // Passed validation — send it to Formspree in the background
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: new FormData(contactForm),
+      headers: { Accept: 'application/json' }
+    })
+      .then((response) => {
+        if (response.ok) {
+          contactStatus.textContent = "Thanks — your message has been sent. We'll reply within 1-2 business days.";
+          contactStatus.className = 'form-status success';
+          contactForm.reset();
+        } else {
+          contactStatus.textContent = 'Something went wrong sending your message. Please try again or email us directly.';
+          contactStatus.className = 'form-status error';
+        }
+      })
+      .catch(() => {
+        contactStatus.textContent = 'Something went wrong sending your message. Please try again or email us directly.';
+        contactStatus.className = 'form-status error';
+      })
+      .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
+      });
   });
 }
 

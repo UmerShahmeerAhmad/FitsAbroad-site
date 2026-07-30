@@ -311,6 +311,18 @@ h1, h2, h3, .logo {
   margin: 0.5rem 0;
 }
 
+.contact-email {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.contact-email a {
+  color: var(--crimson);
+  text-decoration: none;
+  font-weight: 700;
+}
+
 /* FILTER BAR (deals.html) */
 .filter-section {
   padding-top: 2rem;
