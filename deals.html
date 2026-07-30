@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Deals — FitsAbroad</title>
+  <meta name="description" content="Browse every verified coupon code and deal on FitsAbroad, filterable by category and sorted by discount or expiry.">
+
+  <link rel="canonical" href="https://UmerShahmeerAhmad.github.io/fitsabroad-site/deals.html">
+
+  <meta property="og:title" content="All Deals — FitsAbroad">
+  <meta property="og:description" content="Browse every verified coupon code and deal on FitsAbroad, filterable by category and sorted by discount or expiry.">
+  <meta property="og:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
+  <meta property="og:url" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/deals.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="FitsAbroad">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="All Deals — FitsAbroad">
+  <meta name="twitter:description" content="Browse every verified coupon code and deal on FitsAbroad, filterable by category and sorted by discount or expiry.">
+  <meta name="twitter:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo">Fits<span class="logo-accent">Abroad</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="deals.html" class="active">All Deals</a></li>
+        <li><a href="stores.html">Stores</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-header">
+    <div class="container">
+      <p class="hero-eyebrow">90+ verified coupons</p>
+      <h1>All Deals</h1>
+      <p class="hero-sub">Every code on this page has been checked by hand. Clip what you need.</p>
+    </div>
+  </section>
+
+  <!-- FILTER + SORT CONTROLS -->
+  <section class="section filter-section">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="chip-row" id="categoryFilters">
+          <button class="chip chip-filter active" data-category="all">All</button>
+          <button class="chip chip-filter" data-category="fashion">Fashion</button>
+          <button class="chip chip-filter" data-category="electronics">Electronics</button>
+          <button class="chip chip-filter" data-category="beauty">Beauty</button>
+          <button class="chip chip-filter" data-category="travel">Travel</button>
+          <button class="chip chip-filter" data-category="food">Food Delivery</button>
+        </div>
+
+        <select id="sortSelect" class="sort-select" aria-label="Sort deals">
+          <option value="trending">Sort: Trending</option>
+          <option value="discount">Sort: Highest Discount</option>
+          <option value="expiring">Sort: Expiring Soon</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEALS GRID -->
+  <section class="section">
+    <div class="container">
+      <div class="card-grid" id="dealsGrid">
+
+        <article class="coupon-card" data-category="travel">
+          <p class="coupon-store">Nomad Gear Co.</p>
+          <h3 class="coupon-discount">25% OFF</h3>
+          <p class="coupon-desc">Sitewide discount on all travel backpacks and luggage.</p>
+          <p class="coupon-expiry">Expires Aug 15, 2026</p>
+          <button class="btn btn-reveal" data-code="NOMAD25">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="fashion">
+          <p class="coupon-store">Urban Thread</p>
+          <h3 class="coupon-discount">$15 OFF</h3>
+          <p class="coupon-desc">On orders over $75. New arrivals included.</p>
+          <p class="coupon-expiry">Expires Aug 3, 2026</p>
+          <button class="btn btn-reveal" data-code="URBAN15">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="beauty">
+          <p class="coupon-store">GlowLab Skincare</p>
+          <h3 class="coupon-discount">30% OFF</h3>
+          <p class="coupon-desc">First order discount plus free shipping.</p>
+          <p class="coupon-expiry">Expires Sep 1, 2026</p>
+          <button class="btn btn-reveal" data-code="GLOW30">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="electronics">
+          <p class="coupon-store">CircuitBay</p>
+          <h3 class="coupon-discount">20% OFF</h3>
+          <p class="coupon-desc">Headphones, chargers, and smart home gadgets.</p>
+          <p class="coupon-expiry">Expires Aug 20, 2026</p>
+          <button class="btn btn-reveal" data-code="CIRCUIT20">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="food">
+          <p class="coupon-store">QuickBite Delivery</p>
+          <h3 class="coupon-discount">$10 OFF</h3>
+          <p class="coupon-desc">First-time order discount, minimum $25 spend.</p>
+          <p class="coupon-expiry">Expires Aug 5, 2026</p>
+          <button class="btn btn-reveal" data-code="BITE10">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="fashion">
+          <p class="coupon-store">Denver Denim Co.</p>
+          <h3 class="coupon-discount">40% OFF</h3>
+          <p class="coupon-desc">Clearance denim, while sizes last.</p>
+          <p class="coupon-expiry">Expires Aug 10, 2026</p>
+          <button class="btn btn-reveal" data-code="DENIM40">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="travel">
+          <p class="coupon-store">SkyTrail Luggage</p>
+          <h3 class="coupon-discount">$20 OFF</h3>
+          <p class="coupon-desc">Carry-on and checked luggage sets.</p>
+          <p class="coupon-expiry">Expires Sep 12, 2026</p>
+          <button class="btn btn-reveal" data-code="SKY20">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="electronics">
+          <p class="coupon-store">PixelHouse</p>
+          <h3 class="coupon-discount">15% OFF</h3>
+          <p class="coupon-desc">Monitors, keyboards, and desk setups.</p>
+          <p class="coupon-expiry">Expires Aug 25, 2026</p>
+          <button class="btn btn-reveal" data-code="PIXEL15">Reveal Code</button>
+        </article>
+
+        <article class="coupon-card" data-category="beauty">
+          <p class="coupon-store">Bloom Cosmetics</p>
+          <h3 class="coupon-discount">Buy 1 Get 1</h3>
+          <p class="coupon-desc">On all lip and eye products this week only.</p>
+          <p class="coupon-expiry">Expires Aug 2, 2026</p>
+          <button class="btn btn-reveal" data-code="BLOOMBOGO">Reveal Code</button>
+        </article>
+
+      </div>
+
+      <p id="noResultsMsg" class="no-results" hidden>No deals match this filter yet — check back soon.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> FitsAbroad. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

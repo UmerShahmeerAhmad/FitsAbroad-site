@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — FitsAbroad</title>
+  <meta name="description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
+
+  <link rel="canonical" href="https://UmerShahmeerAhmad.github.io/fitsabroad-site/contact.html">
+
+  <meta property="og:title" content="Contact — FitsAbroad">
+  <meta property="og:description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
+  <meta property="og:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
+  <meta property="og:url" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/contact.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="FitsAbroad">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact — FitsAbroad">
+  <meta name="twitter:description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
+  <meta name="twitter:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo">Fits<span class="logo-accent">Abroad</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="deals.html">All Deals</a></li>
+        <li><a href="stores.html">Stores</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-header">
+    <div class="container">
+      <p class="hero-eyebrow">We read everything</p>
+      <h1>Contact</h1>
+      <p class="hero-sub">Found an expired code? Want your store listed? Tell us here.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+
+      <form id="contactForm" class="form-card" novalidate>
+        <h2>Send a message</h2>
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+
+        <button type="submit" class="btn btn-primary">Send message</button>
+
+        <p id="contactStatus" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <form id="newsletterForm" class="form-card" novalidate>
+        <h2>Get deals by email</h2>
+        <p>Fresh, verified codes every week — no spam, unsubscribe anytime.</p>
+
+        <label for="newsletterEmail">Email</label>
+        <input type="email" id="newsletterEmail" name="newsletterEmail" required>
+
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+
+        <p id="newsletterStatus" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> FitsAbroad. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
