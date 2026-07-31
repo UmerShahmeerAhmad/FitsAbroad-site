@@ -2,39 +2,94 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/deals.html</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/deals.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/stores.html</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/stores.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/categories.html</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/categories.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/about.html</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://UmerShahmeerAhmad.github.io/fitsabroad-site/contact.html</loc>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/contact.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-coupon-stacking.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-fake-coupon-codes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-best-time-electronics.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-limited-time-deals.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-extensions-vs-manual.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-flash-sale-psychology.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-secret-loyalty-discounts.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-free-shipping-thresholds.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://YOUR-USERNAME.github.io/fitsabroad-site/blog-cashback-stacking-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>

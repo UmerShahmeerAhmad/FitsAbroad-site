@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitsAbroad — Verified Coupon Codes & Deals</title>
-  <meta name="description" content="FitsAbroad finds verified coupon codes and deals from top stores so you save on every purchase.">
+  <title>FitsAbroad Blog — Coupon Tips, Store Guides & Savings Hacks</title>
+  <meta name="description" content="The FitsAbroad blog: coupon stacking tricks, store guides, and the shopping psychology behind every sale so you save more than just a few dollars.">
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://UmerShahmeerAhmad.github.io/fitsabroad-site/">
+  <link rel="canonical" href="https://YOUR-USERNAME.github.io/fitsabroad-site/">
 
   <!-- Open Graph (Facebook, LinkedIn, etc.) -->
-  <meta property="og:title" content="FitsAbroad — Verified Coupon Codes & Deals">
-  <meta property="og:description" content="FitsAbroad finds verified coupon codes and deals from top stores so you save on every purchase.">
-  <meta property="og:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
-  <meta property="og:url" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/">
+  <meta property="og:title" content="FitsAbroad Blog — Coupon Tips, Store Guides & Savings Hacks">
+  <meta property="og:description" content="The FitsAbroad blog: coupon stacking tricks, store guides, and the shopping psychology behind every sale so you save more than just a few dollars.">
+  <meta property="og:image" content="https://YOUR-USERNAME.github.io/fitsabroad-site/images/og-image.jpg">
+  <meta property="og:url" content="https://YOUR-USERNAME.github.io/fitsabroad-site/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="FitsAbroad">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FitsAbroad — Verified Coupon Codes & Deals">
-  <meta name="twitter:description" content="FitsAbroad finds verified coupon codes and deals from top stores so you save on every purchase.">
-  <meta name="twitter:image" content="https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/og-image.jpg">
+  <meta name="twitter:title" content="FitsAbroad Blog — Coupon Tips, Store Guides & Savings Hacks">
+  <meta name="twitter:description" content="The FitsAbroad blog: coupon stacking tricks, store guides, and the shopping psychology behind every sale so you save more than just a few dollars.">
+  <meta name="twitter:image" content="https://YOUR-USERNAME.github.io/fitsabroad-site/images/og-image.jpg">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
@@ -32,8 +32,8 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "FitsAbroad",
-    "url": "https://UmerShahmeerAhmad.github.io/fitsabroad-site/",
-    "logo": "https://UmerShahmeerAhmad.github.io/fitsabroad-site/images/favicon.png",
+    "url": "https://YOUR-USERNAME.github.io/fitsabroad-site/",
+    "logo": "https://YOUR-USERNAME.github.io/fitsabroad-site/images/favicon.png",
     "description": "FitsAbroad finds verified coupon codes and deals from top stores so you save on every purchase.",
     "sameAs": [
       "https://facebook.com/fitsabroad",
@@ -67,89 +67,120 @@
     </nav>
   </header>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <p class="hero-eyebrow">✓ Verified Deals for July 2026</p>
-      <h1>Clip the savings, skip the search.</h1>
-      <p class="hero-sub">
-        FitsAbroad checks every coupon code by hand before it's listed —
-        so the deal you clip is the deal you get.
-      </p>
-
-      <form class="hero-search" id="heroSearchForm">
-        <input type="text" id="heroSearchInput" placeholder="Search stores, brands, or categories..." aria-label="Search stores or brands">
-        <button type="submit" class="btn btn-primary">Find Deals</button>
-      </form>
-
-      <div class="trust-badges">
-        <span>✓ 100% Verified Codes</span>
-        <span>⚡ Updated Daily</span>
-        <span>🔥 Exclusive Deals</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CATEGORY CHIPS ===== -->
-  <section class="section categories-strip">
+  <!-- ===== BLOG INTRO ===== -->
+  <section class="blog-intro">
     <div class="container">
-      <h2 class="section-title">Browse by category</h2>
-      <div class="chip-row">
-        <a href="categories.html" class="chip">Fashion</a>
-        <a href="categories.html" class="chip">Electronics</a>
-        <a href="categories.html" class="chip">Beauty</a>
-        <a href="categories.html" class="chip">Travel</a>
-        <a href="categories.html" class="chip">Home & Living</a>
-        <a href="categories.html" class="chip">Food Delivery</a>
+      <p class="hero-eyebrow">The FitsAbroad Blog</p>
+      <h1>Smarter shopping, one post at a time.</h1>
+      <p class="hero-sub">
+        Coupon tricks, store guides, and the shopping psychology behind every "limited time" sale
+        so you save more than just a few dollars.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== BLOG CATEGORY FILTERS ===== -->
+  <section class="section blog-filter-section">
+    <div class="container">
+      <div class="chip-row" id="blogFilters">
+        <button class="chip chip-filter active" data-category="all">All Posts</button>
+        <button class="chip chip-filter" data-category="coupon-tips">Coupon Tips</button>
+        <button class="chip chip-filter" data-category="store-guides">Store Guides</button>
+        <button class="chip chip-filter" data-category="savings-hacks">Savings Hacks</button>
+        <button class="chip chip-filter" data-category="trending">Trending</button>
       </div>
     </div>
   </section>
 
-  <!-- ===== FEATURED DEALS ===== -->
+  <!-- ===== FEATURED POST ===== -->
+  <section class="section featured-post-section">
+    <div class="container">
+      <article class="featured-post">
+        <p class="blog-tag">Trending</p>
+        <h2>10 Coupon Stacking Tricks Most Shoppers Don't Know</h2>
+        <p class="blog-meta">Jul 28, 2026 &middot; 6 min read</p>
+        <p class="blog-excerpt">
+          Combining a store coupon with a card discount and a cashback browser extension can
+          take 20% off down to nearly half price, if you stack them in the right order.
+          Here's the exact sequence that actually works at checkout.
+        </p>
+        <a href="blog-coupon-stacking.html" class="ticket-link">Read the full post &rarr;</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== BLOG GRID (all posts) ===== -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Featured coupons</h2>
+      <div class="card-grid" id="blogGrid">
 
-      <div class="card-grid">
-
-        <article class="coupon-card">
-          <p class="coupon-store">Nomad Gear Co.</p>
-          <h3 class="coupon-discount">25% OFF</h3>
-          <p class="coupon-desc">Sitewide discount on all travel backpacks and luggage.</p>
-          <p class="coupon-expiry">Expires Aug 15, 2026</p>
-          <button class="btn btn-reveal" data-code="NOMAD25">Reveal Code</button>
+        <article class="blog-card" data-category="coupon-tips">
+          <p class="blog-tag">Coupon Tips</p>
+          <h3>How to Spot a Fake Coupon Code Before You Waste a Click</h3>
+          <p class="blog-meta">Jul 22, 2026 &middot; 4 min read</p>
+          <p class="blog-excerpt">Three red flags that separate a real code from a link-farm scam, before you hand over your email for nothing.</p>
+          <a href="blog-fake-coupon-codes.html" class="ticket-link">Read more &rarr;</a>
         </article>
 
-        <article class="coupon-card">
-          <p class="coupon-store">Urban Thread</p>
-          <h3 class="coupon-discount">$15 OFF</h3>
-          <p class="coupon-desc">On orders over $75. New arrivals included.</p>
-          <p class="coupon-expiry">Expires Aug 3, 2026</p>
-          <button class="btn btn-reveal" data-code="URBAN15">Reveal Code</button>
+        <article class="blog-card" data-category="savings-hacks">
+          <p class="blog-tag">Savings Hacks</p>
+          <h3>Best Time of Year to Buy Electronics, Backed by Sale Data</h3>
+          <p class="blog-meta">Jul 18, 2026 &middot; 5 min read</p>
+          <p class="blog-excerpt">We tracked a year of price drops across five retailers. The results weren't what we expected for laptops.</p>
+          <a href="blog-best-time-electronics.html" class="ticket-link">Read more &rarr;</a>
         </article>
 
-        <article class="coupon-card">
-          <p class="coupon-store">GlowLab Skincare</p>
-          <h3 class="coupon-discount">30% OFF</h3>
-          <p class="coupon-desc">First order discount plus free shipping.</p>
-          <p class="coupon-expiry">Expires Sep 1, 2026</p>
-          <button class="btn btn-reveal" data-code="GLOW30">Reveal Code</button>
+        <article class="blog-card" data-category="trending">
+          <p class="blog-tag">Trending</p>
+          <h3>Why That "Limited Time" Deal Might Not Be So Limited</h3>
+          <p class="blog-meta">Jul 15, 2026 &middot; 4 min read</p>
+          <p class="blog-excerpt">Countdown timers reset. "Only 3 left" resets too. Here's how to tell urgency from marketing theater.</p>
+          <a href="blog-limited-time-deals.html" class="ticket-link">Read more &rarr;</a>
+        </article>
+
+        <article class="blog-card" data-category="coupon-tips">
+          <p class="blog-tag">Coupon Tips</p>
+          <h3>Browser Extensions vs. Manual Coupon Hunting: What's Faster</h3>
+          <p class="blog-meta">Jul 10, 2026 &middot; 5 min read</p>
+          <p class="blog-excerpt">We timed both methods on ten checkouts. The extension won on speed, but lost on total savings twice.</p>
+          <a href="blog-extensions-vs-manual.html" class="ticket-link">Read more &rarr;</a>
+        </article>
+
+        <article class="blog-card" data-category="savings-hacks">
+          <p class="blog-tag">Savings Hacks</p>
+          <h3>The Psychology Behind Flash Sales, and How to Not Get Played</h3>
+          <p class="blog-meta">Jul 6, 2026 &middot; 6 min read</p>
+          <p class="blog-excerpt">Scarcity and urgency are designed to skip your rational brain. Here's how to pause for ten seconds before you buy.</p>
+          <a href="blog-flash-sale-psychology.html" class="ticket-link">Read more &rarr;</a>
+        </article>
+
+        <article class="blog-card" data-category="store-guides">
+          <p class="blog-tag">Store Guides</p>
+          <h3>5 Stores With Secret Loyalty Discounts You Have to Ask For</h3>
+          <p class="blog-meta">Jul 2, 2026 &middot; 4 min read</p>
+          <p class="blog-excerpt">These discounts don't show up at checkout automatically, a quick chat with support unlocks them.</p>
+          <a href="blog-secret-loyalty-discounts.html" class="ticket-link">Read more &rarr;</a>
+        </article>
+
+        <article class="blog-card" data-category="savings-hacks">
+          <p class="blog-tag">Savings Hacks</p>
+          <h3>Free Shipping Thresholds: The Hidden Math Retailers Use</h3>
+          <p class="blog-meta">Jun 27, 2026 &middot; 5 min read</p>
+          <p class="blog-excerpt">That "spend $10 more for free shipping" prompt is calculated to make you spend more than the shipping fee. Here's the math.</p>
+          <a href="blog-free-shipping-thresholds.html" class="ticket-link">Read more &rarr;</a>
+        </article>
+
+        <article class="blog-card" data-category="store-guides">
+          <p class="blog-tag">Store Guides</p>
+          <h3>A First-Timer's Guide to Stacking Cashback Apps</h3>
+          <p class="blog-meta">Jun 20, 2026 &middot; 7 min read</p>
+          <p class="blog-excerpt">Cashback apps conflict with each other more often than you'd think. Here's which combos actually pay out.</p>
+          <a href="blog-cashback-stacking-guide.html" class="ticket-link">Read more &rarr;</a>
         </article>
 
       </div>
 
-      <div class="center-cta">
-        <a href="deals.html" class="btn btn-ghost">View all deals →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CALL TO ACTION ===== -->
-  <section class="cta">
-    <div class="container cta-inner">
-      <h2>Never miss a deal again.</h2>
-      <p>Get fresh, verified coupon codes sent to your inbox every week.</p>
-      <a href="contact.html" class="btn btn-primary">Join the newsletter</a>
+      <p id="noBlogResultsMsg" class="no-results" hidden>No posts in this category yet, check back soon.</p>
     </div>
   </section>
 

@@ -175,6 +175,39 @@ if (dealsGrid) {
   }
 }
 
+/* ---------- 5b. Blog page (home): category filter ---------- */
+const blogGrid = document.getElementById('blogGrid');
+const blogFilters = document.getElementById('blogFilters');
+const noBlogResultsMsg = document.getElementById('noBlogResultsMsg');
+
+if (blogGrid && blogFilters) {
+  const blogCards = Array.from(blogGrid.querySelectorAll('.blog-card'));
+
+  function applyBlogFilter() {
+    const activeChip = blogFilters.querySelector('.chip-filter.active');
+    const activeCategory = activeChip ? activeChip.getAttribute('data-category') : 'all';
+    let visibleCount = 0;
+
+    blogCards.forEach((card) => {
+      const matches = activeCategory === 'all' || card.getAttribute('data-category') === activeCategory;
+      card.style.display = matches ? '' : 'none';
+      if (matches) visibleCount += 1;
+    });
+
+    if (noBlogResultsMsg) {
+      noBlogResultsMsg.hidden = visibleCount !== 0;
+    }
+  }
+
+  blogFilters.querySelectorAll('.chip-filter').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      blogFilters.querySelectorAll('.chip-filter').forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      applyBlogFilter();
+    });
+  });
+}
+
 /* ---------- 6. Animated number counters (About page stats) ---------- */
 const statNumbers = document.querySelectorAll('.stat-number');
 
@@ -266,9 +299,60 @@ if (contactForm && contactStatus) {
   });
 }
 
-/* ---------- 8. Newsletter form validation ---------- */
+/* ---------- 8. Newsletter form validation + Mailchimp submission ---------- */
+// Mailchimp doesn't allow normal fetch() calls from other websites (CORS),
+// so we use their supported JSONP method instead: we build a <script> tag
+// pointing at Mailchimp's endpoint, and Mailchimp calls our callback function
+// with the result. This still works with zero backend server of our own.
 const newsletterForm = document.getElementById('newsletterForm');
 const newsletterStatus = document.getElementById('newsletterStatus');
+
+function submitToMailchimp(form, email, interests) {
+  return new Promise((resolve, reject) => {
+    const action = form.getAttribute('data-mc-action');
+    const u = form.getAttribute('data-mc-u');
+    const id = form.getAttribute('data-mc-id');
+
+    if (!action || !u || !id || action.includes('YOUR-SUBDOMAIN')) {
+      reject(new Error('Mailchimp is not configured yet — replace the data-mc-* placeholders in contact.html.'));
+      return;
+    }
+
+    // Unique callback name so multiple submits don't collide
+    const callbackName = 'mcCallback_' + Date.now();
+
+    window[callbackName] = (data) => {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      if (data.result === 'success') {
+        resolve(data);
+      } else {
+        // Mailchimp still calls this "success" transport-wise even on a soft
+        // error (like "already subscribed") — data.msg has the real message.
+        reject(new Error(data.msg || 'Subscription failed.'));
+      }
+    };
+
+    const params = new URLSearchParams();
+    params.set('u', u);
+    params.set('id', id);
+    params.set('EMAIL', email);
+    // Each selected interest checkbox gets added as its own param.
+    // Once you've created a real Mailchimp Interest Group, replace
+    // 'interest' below with the exact group field name Mailchimp gives you,
+    // e.g. params.append('group[12345][1]', '1') for each checked box.
+    interests.forEach((value) => params.append('interest', value));
+    params.set('c', callbackName);
+
+    const script = document.createElement('script');
+    script.src = `${action}?${params.toString()}`;
+    script.onerror = () => {
+      delete window[callbackName];
+      reject(new Error('Could not reach Mailchimp. Check your connection and try again.'));
+    };
+    document.body.appendChild(script);
+  });
+}
 
 if (newsletterForm && newsletterStatus) {
   newsletterForm.addEventListener('submit', (e) => {
@@ -276,18 +360,33 @@ if (newsletterForm && newsletterStatus) {
 
     const newsletterEmail = document.getElementById('newsletterEmail');
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     const emailValid = newsletterEmail && emailPattern.test(newsletterEmail.value.trim());
 
-    if (emailValid) {
-      newsletterStatus.textContent = "You're subscribed! Look out for our next dispatch.";
-      newsletterStatus.className = 'form-status success';
-      newsletterForm.reset();
-
-      // NOTE: Front-end only — same Formspree note as above applies here.
-    } else {
+    if (!emailValid) {
       newsletterStatus.textContent = 'Please enter a valid email address.';
       newsletterStatus.className = 'form-status error';
+      return;
     }
+
+    const selectedInterests = Array.from(
+      newsletterForm.querySelectorAll('input[name="interest"]:checked')
+    ).map((box) => box.value);
+
+    const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    submitToMailchimp(newsletterForm, newsletterEmail.value.trim(), selectedInterests)
+      .then(() => {
+        newsletterStatus.textContent = "You're subscribed! Look out for our next dispatch.";
+        newsletterStatus.className = 'form-status success';
+        newsletterForm.reset();
+      })
+      .catch((err) => {
+        newsletterStatus.textContent = err.message || 'Something went wrong subscribing. Please try again.';
+        newsletterStatus.className = 'form-status error';
+      })
+      .finally(() => {
+        if (submitBtn) submitBtn.disabled = false;
+      });
   });
 }

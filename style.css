@@ -323,6 +323,42 @@ h1, h2, h3, .logo {
   font-weight: 700;
 }
 
+.incentive-text {
+  background: #fdf1cc;
+  border: 1px dashed var(--gold);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.interest-group {
+  border: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.interest-group legend {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
 /* FILTER BAR (deals.html) */
 .filter-section {
   padding-top: 2rem;
@@ -666,6 +702,191 @@ h1, h2, h3, .logo {
   max-width: 1100px;
   margin: 0 auto;
   border-top: 2px dashed #eee0c0;
+}
+
+/* BLOG INTRO (home page header) */
+.blog-intro {
+  padding: 3.5rem 0 2.5rem;
+  background: var(--cream);
+  text-align: center;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(215, 38, 61, 0.035) 0px,
+    rgba(215, 38, 61, 0.035) 2px,
+    transparent 2px,
+    transparent 14px
+  );
+}
+
+.blog-intro h1 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.blog-intro .hero-sub {
+  max-width: 620px;
+  margin: 0 auto;
+  color: #444;
+}
+
+/* BLOG FILTER STRIP */
+.blog-filter-section {
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+/* FEATURED POST */
+.featured-post-section {
+  padding-top: 1.5rem;
+}
+
+.featured-post {
+  position: relative;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(27, 27, 47, 0.18);
+}
+
+.featured-post h2 {
+  font-size: 1.8rem;
+  margin: 0.75rem 0 0.5rem;
+  max-width: 640px;
+}
+
+.featured-post .blog-meta {
+  color: #cfcfe0;
+}
+
+.featured-post .blog-excerpt {
+  max-width: 640px;
+  color: #e8e8f0;
+  margin: 1rem 0 1.25rem;
+}
+
+.featured-post .ticket-link {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.featured-post .blog-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* BLOG CARDS */
+.blog-card {
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(27, 27, 47, 0.07);
+  padding: 1.5rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(27, 27, 47, 0.13);
+}
+
+.blog-tag {
+  display: inline-block;
+  background: #fdf1cc;
+  color: #8a6d00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.blog-card h3 {
+  font-size: 1.1rem;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+}
+
+.blog-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #888;
+  margin-bottom: 0.6rem;
+}
+
+.blog-excerpt {
+  color: #444;
+  font-size: 0.92rem;
+  margin-bottom: 0.75rem;
+}
+
+/* INDIVIDUAL ARTICLE PAGES */
+.article-header {
+  padding: 3rem 0 2rem;
+  background: var(--cream);
+  text-align: center;
+}
+
+.article-header .blog-tag {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.article-header h1 {
+  font-size: 2rem;
+  max-width: 700px;
+  margin: 0.75rem auto 0.5rem;
+}
+
+.article-header .blog-meta {
+  justify-content: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin: 1.5rem 0 0;
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  color: var(--crimson);
+}
+
+.article-body {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+  color: #333;
+  font-size: 1.02rem;
+}
+
+.article-body h2 {
+  font-size: 1.3rem;
+  margin: 2rem 0 1rem;
+}
+
+.article-cta {
+  max-width: 700px;
+  margin: 2rem auto 0;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 12px;
+  padding: 1.75rem;
+  text-align: center;
+}
+
+.article-cta p {
+  margin-bottom: 1rem;
+  color: #e8e8f0;
 }
 
 /* MOBILE */
