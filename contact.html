@@ -6,22 +6,42 @@
   <title>Contact — FitsAbroad</title>
   <meta name="description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
 
-  <link rel="canonical" href="https://YOUR-USERNAME.github.io/fitsabroad-site/contact.html">
+  <link rel="canonical" href="https://umershahmeerahmad.github.io/FitsAbroad-site/contact.html">
 
   <meta property="og:title" content="Contact — FitsAbroad">
   <meta property="og:description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
-  <meta property="og:image" content="https://YOUR-USERNAME.github.io/fitsabroad-site/images/og-image.jpg">
-  <meta property="og:url" content="https://YOUR-USERNAME.github.io/fitsabroad-site/contact.html">
+  <meta property="og:image" content="https://umershahmeerahmad.github.io/FitsAbroad-site/images/og-image.jpg">
+  <meta property="og:url" content="https://umershahmeerahmad.github.io/FitsAbroad-site/contact.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="FitsAbroad">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact — FitsAbroad">
   <meta name="twitter:description" content="Report an expired code, suggest a store, or ask FitsAbroad a question.">
-  <meta name="twitter:image" content="https://YOUR-USERNAME.github.io/fitsabroad-site/images/og-image.jpg">
+  <meta name="twitter:image" content="https://umershahmeerahmad.github.io/FitsAbroad-site/images/og-image.jpg">
+
+  <!-- Preconnect + font loading (faster than CSS @import) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Google Search Console verification -->
+  <meta name="google-site-verification" content="mF45wb_gdN6nH1" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RK0RBSJB5V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RK0RBSJB5V');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -71,12 +91,22 @@
         <p id="contactStatus" class="form-status" role="status" aria-live="polite"></p>
       </form>
 
-      <form id="newsletterForm" class="form-card" action="https://formspree.io/f/YOUR_NEWSLETTER_FORM_ID" method="POST" novalidate>
+      <form id="newsletterForm" class="form-card" data-mc-action="https://YOUR-SUBDOMAIN.list-manage.com/subscribe/post-json" data-mc-u="YOUR_MC_U_VALUE" data-mc-id="YOUR_MC_ID_VALUE" novalidate>
         <h2>Get deals by email</h2>
         <p>Fresh, verified codes every week — no spam, unsubscribe anytime.</p>
+        <p class="incentive-text">🎁 Subscribe now and get 10% off your first find.</p>
 
         <label for="newsletterEmail">Email</label>
-        <input type="email" id="newsletterEmail" name="newsletterEmail" required>
+        <input type="email" id="newsletterEmail" name="EMAIL" required>
+
+        <fieldset class="interest-group">
+          <legend>What deals do you care about?</legend>
+          <label class="checkbox-label"><input type="checkbox" name="interest" value="fashion"> Fashion</label>
+          <label class="checkbox-label"><input type="checkbox" name="interest" value="electronics"> Electronics</label>
+          <label class="checkbox-label"><input type="checkbox" name="interest" value="beauty"> Beauty</label>
+          <label class="checkbox-label"><input type="checkbox" name="interest" value="travel"> Travel</label>
+          <label class="checkbox-label"><input type="checkbox" name="interest" value="food"> Food Delivery</label>
+        </fieldset>
 
         <button type="submit" class="btn btn-primary">Subscribe</button>
 
