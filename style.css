@@ -435,6 +435,23 @@ h1, h2, h3, .logo {
   margin: 0.25rem 0;
 }
 
+.store-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin: 0.75rem 0;
+}
+
+.store-tag {
+  background: #fdf1cc;
+  color: #8a6d00;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
 /* CATEGORY CARDS */
 .category-card {
   border: 2px dashed var(--gold);
