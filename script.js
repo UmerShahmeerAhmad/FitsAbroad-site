@@ -1,5 +1,5 @@
 // =========================================
-// FITSABROAD — script.js (Stage 2 — full shared functionality)
+// FITSABROAD — script.js
 // Shared across every page. All DOM lookups are null-checked so this file
 // works safely even on pages that don't have a given element.
 // =========================================
@@ -35,14 +35,23 @@ if (heroSearchForm) {
   });
 }
 
-/* ---------- 4. Reveal Code + Copy to Clipboard ---------- */
-// Every button with class "btn-reveal" has a data-code attribute.
-// First click: reveal the code and copy it to the clipboard.
-// Later clicks: re-copy the already-revealed code (handy if the user navigated away).
+/* =========================================
+   COOKIE HELPERS (shared by consent, theme, and recently-viewed features)
+   ========================================= */
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+}
+
+/* ---------- 4. Reveal Code + Copy to Clipboard (+ records "recently viewed") ---------- */
 const revealButtons = document.querySelectorAll('.btn-reveal');
 
 function flashCopied(btn, code) {
-  const original = btn.textContent;
   btn.textContent = 'Copied!';
   setTimeout(() => {
     btn.textContent = code;
@@ -57,20 +66,30 @@ revealButtons.forEach((btn) => {
     const copyText = () => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(code).catch(() => {
-          /* Clipboard can fail silently in some browsers/contexts — code is
-             still shown on the button, so the user can select/copy manually. */
+          /* Clipboard can fail silently in some browsers — code is still
+             shown on the button, so the user can select/copy manually. */
         });
       }
     };
 
     if (!btn.classList.contains('revealed')) {
-      // First click — reveal the code
       btn.classList.add('revealed');
       btn.textContent = code;
       copyText();
       flashCopied(btn, code);
+
+      const card = btn.closest('.coupon-card');
+      if (card) {
+        const storeEl = card.querySelector('.coupon-store');
+        const discountEl = card.querySelector('.coupon-discount');
+        const store = storeEl ? storeEl.textContent.trim() : '';
+        const discount = discountEl ? discountEl.textContent.trim() : '';
+        if (store) {
+          addRecentlyViewed({ store: store, discount: discount, code: code });
+          renderRecentlyViewed();
+        }
+      }
     } else {
-      // Already revealed — re-copy on click
       copyText();
       flashCopied(btn, code);
     }
@@ -86,17 +105,16 @@ const noResultsMsg = document.getElementById('noResultsMsg');
 if (dealsGrid) {
   const allCards = Array.from(dealsGrid.querySelectorAll('.coupon-card'));
 
-  // Parse a discount card's headline (e.g. "25% OFF", "$15 OFF", "Buy 1 Get 1")
-  // into a comparable number. Non-numeric discounts sort to the bottom.
   function parseDiscountValue(card) {
-    const text = card.querySelector('.coupon-discount')?.textContent || '';
+    const el = card.querySelector('.coupon-discount');
+    const text = el ? el.textContent : '';
     const match = text.match(/(\d+(\.\d+)?)/);
     return match ? parseFloat(match[1]) : -1;
   }
 
-  // Parse "Expires Aug 15, 2026" into a Date object for sorting.
   function parseExpiryDate(card) {
-    const text = card.querySelector('.coupon-expiry')?.textContent || '';
+    const el = card.querySelector('.coupon-expiry');
+    const text = el ? el.textContent : '';
     const cleaned = text.replace('Expires', '').trim();
     const parsed = new Date(cleaned);
     return isNaN(parsed.getTime()) ? new Date('2999-12-31') : parsed;
@@ -111,22 +129,19 @@ if (dealsGrid) {
 
     let visibleCount = 0;
 
-    // Filter
     allCards.forEach((card) => {
       const matches = activeCategory === 'all' || card.getAttribute('data-category') === activeCategory;
       card.style.display = matches ? '' : 'none';
       if (matches) visibleCount += 1;
     });
 
-    // Sort (re-append visible cards in the new order)
-    let sortedCards = [...allCards];
+    let sortedCards = allCards.slice();
 
     if (sortValue === 'discount') {
       sortedCards.sort((a, b) => parseDiscountValue(b) - parseDiscountValue(a));
     } else if (sortValue === 'expiring') {
       sortedCards.sort((a, b) => parseExpiryDate(a) - parseExpiryDate(b));
     }
-    // 'trending' = keep original order
 
     sortedCards.forEach((card) => dealsGrid.appendChild(card));
 
@@ -149,7 +164,6 @@ if (dealsGrid) {
     sortSelect.addEventListener('change', applyFilterAndSort);
   }
 
-  // Handle ?search=... coming from the homepage hero search bar
   const urlParams = new URLSearchParams(window.location.search);
   const searchTerm = urlParams.get('search');
 
@@ -167,7 +181,7 @@ if (dealsGrid) {
     if (noResultsMsg) {
       noResultsMsg.hidden = visibleCount !== 0;
       if (visibleCount === 0) {
-        noResultsMsg.textContent = `No deals match "${searchTerm}" yet — try browsing all deals below.`;
+        noResultsMsg.textContent = 'No deals match "' + searchTerm + '" yet — try browsing all deals below.';
       }
     }
   } else {
@@ -252,7 +266,7 @@ const contactStatus = document.getElementById('contactStatus');
 
 if (contactForm && contactStatus) {
   contactForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // stop the normal page reload/redirect either way
+    e.preventDefault();
 
     const name = document.getElementById('name');
     const email = document.getElementById('email');
@@ -270,7 +284,6 @@ if (contactForm && contactStatus) {
       return;
     }
 
-    // Passed validation — send it to Formspree in the background
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
@@ -300,10 +313,6 @@ if (contactForm && contactStatus) {
 }
 
 /* ---------- 8. Newsletter form validation + Mailchimp submission ---------- */
-// Mailchimp doesn't allow normal fetch() calls from other websites (CORS),
-// so we use their supported JSONP method instead: we build a <script> tag
-// pointing at Mailchimp's endpoint, and Mailchimp calls our callback function
-// with the result. This still works with zero backend server of our own.
 const newsletterForm = document.getElementById('newsletterForm');
 const newsletterStatus = document.getElementById('newsletterStatus');
 
@@ -313,12 +322,11 @@ function submitToMailchimp(form, email, interests) {
     const u = form.getAttribute('data-mc-u');
     const id = form.getAttribute('data-mc-id');
 
-    if (!action || !u || !id || action.includes('YOUR-SUBDOMAIN')) {
+    if (!action || !u || !id || action.indexOf('YOUR-SUBDOMAIN') !== -1) {
       reject(new Error('Mailchimp is not configured yet — replace the data-mc-* placeholders in contact.html.'));
       return;
     }
 
-    // Unique callback name so multiple submits don't collide
     const callbackName = 'mcCallback_' + Date.now();
 
     window[callbackName] = (data) => {
@@ -327,8 +335,6 @@ function submitToMailchimp(form, email, interests) {
       if (data.result === 'success') {
         resolve(data);
       } else {
-        // Mailchimp still calls this "success" transport-wise even on a soft
-        // error (like "already subscribed") — data.msg has the real message.
         reject(new Error(data.msg || 'Subscription failed.'));
       }
     };
@@ -337,15 +343,11 @@ function submitToMailchimp(form, email, interests) {
     params.set('u', u);
     params.set('id', id);
     params.set('EMAIL', email);
-    // Each selected interest checkbox gets added as its own param.
-    // Once you've created a real Mailchimp Interest Group, replace
-    // 'interest' below with the exact group field name Mailchimp gives you,
-    // e.g. params.append('group[12345][1]', '1') for each checked box.
     interests.forEach((value) => params.append('interest', value));
     params.set('c', callbackName);
 
     const script = document.createElement('script');
-    script.src = `${action}?${params.toString()}`;
+    script.src = action + '?' + params.toString();
     script.onerror = () => {
       delete window[callbackName];
       reject(new Error('Could not reach Mailchimp. Check your connection and try again.'));
@@ -390,3 +392,154 @@ if (newsletterForm && newsletterStatus) {
       });
   });
 }
+
+/* =========================================
+   9. COOKIE CONSENT BANNER + GOOGLE CONSENT MODE
+   ========================================= */
+const COOKIE_CONSENT_KEY = 'fitsabroad_cookie_consent'; // 'accepted' | 'rejected'
+
+function applyConsent(choice) {
+  if (typeof gtag !== 'function') return;
+  const granted = choice === 'accepted';
+  gtag('consent', 'update', {
+    ad_storage: granted ? 'granted' : 'denied',
+    ad_user_data: granted ? 'granted' : 'denied',
+    ad_personalization: granted ? 'granted' : 'denied',
+    analytics_storage: granted ? 'granted' : 'denied'
+  });
+}
+
+function showCookieBanner() {
+  if (document.getElementById('cookieBanner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'cookieBanner';
+  banner.className = 'cookie-banner';
+  banner.innerHTML =
+    '<p>We use cookies for site analytics and ads. See our ' +
+    '<a href="privacy-policy.html">Privacy Policy</a> for details.</p>' +
+    '<div class="cookie-banner-actions">' +
+    '<button id="cookieRejectBtn" class="btn btn-ghost">Reject Non-Essential</button>' +
+    '<button id="cookieAcceptBtn" class="btn btn-primary">Accept All</button>' +
+    '</div>';
+
+  document.body.appendChild(banner);
+
+  document.getElementById('cookieAcceptBtn').addEventListener('click', () => {
+    setCookie(COOKIE_CONSENT_KEY, 'accepted', 180);
+    applyConsent('accepted');
+    banner.remove();
+  });
+
+  document.getElementById('cookieRejectBtn').addEventListener('click', () => {
+    setCookie(COOKIE_CONSENT_KEY, 'rejected', 180);
+    applyConsent('rejected');
+    banner.remove();
+  });
+}
+
+const existingConsent = getCookie(COOKIE_CONSENT_KEY);
+if (existingConsent) {
+  applyConsent(existingConsent);
+} else {
+  showCookieBanner();
+}
+
+// Dynamically add a "Cookie Settings" link to every page's footer so people
+// can change their mind later, without editing every HTML file by hand.
+const footerLinksList = document.querySelector('.footer-links');
+if (footerLinksList && !document.getElementById('cookieSettingsLink')) {
+  const settingsLi = document.createElement('li');
+  settingsLi.innerHTML = '<a href="#" id="cookieSettingsLink">Cookie Settings</a>';
+  footerLinksList.appendChild(settingsLi);
+
+  document.getElementById('cookieSettingsLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    showCookieBanner();
+  });
+}
+
+/* =========================================
+   10. DARK MODE TOGGLE (functional cookie)
+   ========================================= */
+const THEME_COOKIE_KEY = 'fitsabroad_theme'; // 'dark' | 'light'
+
+function applyTheme(theme) {
+  document.body.classList.toggle('dark-mode', theme === 'dark');
+}
+
+const savedTheme = getCookie(THEME_COOKIE_KEY) || 'light';
+applyTheme(savedTheme);
+
+const navbarEl = document.querySelector('.navbar');
+if (navbarEl && !document.getElementById('themeToggleBtn')) {
+  const toggleBtn = document.createElement('button');
+  toggleBtn.id = 'themeToggleBtn';
+  toggleBtn.className = 'theme-toggle';
+  toggleBtn.setAttribute('aria-label', 'Toggle dark mode');
+  toggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+  const hamburgerRef = navbarEl.querySelector('.hamburger');
+  navbarEl.insertBefore(toggleBtn, hamburgerRef); // appends if hamburgerRef is null
+
+  toggleBtn.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    setCookie(THEME_COOKIE_KEY, isDark ? 'dark' : 'light', 365);
+    toggleBtn.textContent = isDark ? '☀️' : '🌙';
+  });
+}
+
+/* =========================================
+   11. RECENTLY VIEWED DEALS (functional cookie)
+   ========================================= */
+const RECENTLY_VIEWED_KEY = 'fitsabroad_recently_viewed';
+const MAX_RECENTLY_VIEWED = 5;
+
+function getRecentlyViewed() {
+  const raw = getCookie(RECENTLY_VIEWED_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return [];
+  }
+}
+
+function addRecentlyViewed(entry) {
+  let list = getRecentlyViewed();
+  list = list.filter((item) => item.code !== entry.code);
+  list.unshift(entry);
+  list = list.slice(0, MAX_RECENTLY_VIEWED);
+  setCookie(RECENTLY_VIEWED_KEY, JSON.stringify(list), 30);
+}
+
+function renderRecentlyViewed() {
+  if (!dealsGrid) return; // only render this on deals.html
+
+  const list = getRecentlyViewed();
+  let section = document.getElementById('recentlyViewedSection');
+
+  if (list.length === 0) {
+    if (section) section.remove();
+    return;
+  }
+
+  if (!section) {
+    section = document.createElement('div');
+    section.id = 'recentlyViewedSection';
+    section.className = 'recently-viewed';
+    section.innerHTML = '<h2>Recently Viewed</h2><div class="recently-viewed-list"></div>';
+
+    const filterSection = document.querySelector('.filter-section');
+    if (filterSection && filterSection.parentNode) {
+      filterSection.parentNode.insertBefore(section, filterSection);
+    }
+  }
+
+  const listEl = section.querySelector('.recently-viewed-list');
+  listEl.innerHTML = list
+    .map((item) => '<span class="recently-viewed-chip">' + item.store + ' — ' + item.discount + '</span>')
+    .join('');
+}
+
+renderRecentlyViewed(); // in case there's already history when the page loads

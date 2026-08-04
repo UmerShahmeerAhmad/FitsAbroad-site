@@ -4,10 +4,11 @@ Run through this every time you add a new store to `stores.html`.
 
 ## 1. Research keywords (free tools, ~5 minutes)
 - [ ] Open `store-keyword-helper.html` locally (double-click it, don't deploy it)
-- [ ] Type the store name or its niche (e.g. "TourRadar" or just "travel booking")
-- [ ] Click all 4 buttons — this opens Google Trends, Google Search, AnswerThePublic, and Ubersuggest, each pre-filled
-- [ ] In Google Search results, note anything under "People also search for" and "People also ask"
+- [ ] Search the **brand name** first (e.g. "TourRadar") — mainly useful in Google Trends
+- [ ] Then re-search using the **niche/category instead** (e.g. "tour booking discount") in all 4 tools — this is what actually triggers useful results
+- [ ] In Google or Bing results, scroll to the bottom for "related searches" / "People also search for"
 - [ ] In Google Trends, note any "Related queries" marked "Breakout" or with high relative interest
+- [ ] In Reddit, skim 3-5 post titles/comments for phrases that repeat
 - [ ] Pick 2-4 keywords that genuinely describe what the store offers — don't force in anything irrelevant just because it's trending
 
 ## 2. Generate the tags
