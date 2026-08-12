@@ -1155,6 +1155,39 @@ body.dark-mode .recently-viewed-chip {
   color: #f5d98a;
 }
 
+/* =========================================
+   DASHBOARD-UPLOADED IMAGES
+   Add this block to your real style.css (paste before "/* MOBILE */")
+   ========================================= */
+
+/* Store logo image (replaces the initials circle when a real logo is uploaded) */
+.store-logo-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+/* Blog post cover image (top of the article page) */
+.article-cover-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+/* Blog card thumbnail (on the home page grid) */
+.blog-card-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
 /* MOBILE */
 @media (max-width: 700px) {
   .hamburger {
