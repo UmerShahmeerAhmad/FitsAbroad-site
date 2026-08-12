@@ -1157,7 +1157,7 @@ body.dark-mode .recently-viewed-chip {
 
 /* =========================================
    DASHBOARD-UPLOADED IMAGES
-   Add this block to your real style.css (paste before "/* MOBILE */")
+   Paste this block before the mobile styles section.
    ========================================= */
 
 /* Store logo image (replaces the initials circle when a real logo is uploaded) */
