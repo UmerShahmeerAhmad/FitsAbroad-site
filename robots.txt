@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://UmerShahmeerAhmad.github.io/fitsabroad-site/sitemap.xml
+Sitemap: https://fitsabroad.com/sitemap.xml
+
