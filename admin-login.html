@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FitsAbroad Admin</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; color: #1B1B2F; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.1rem; margin-top: 0; }
+  .card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  label { display: block; font-weight: 600; margin-top: 12px; font-size: 0.88rem; }
+  input, textarea, select { width: 100%; padding: 9px; font-size: 0.95rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 4px; font-family: inherit; }
+  button { padding: 10px 18px; border: none; border-radius: 6px; background: #1B1B2F; color: #F5B700; font-weight: 700; cursor: pointer; margin-top: 14px; margin-right: 8px; }
+  button:hover { background: #333; }
+  button.danger { background: #D7263D; color: #fff; }
+  button.secondary { background: #eee; color: #1B1B2F; }
+  .status { margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-size: 0.88rem; display: none; }
+  .status.success { background: #e6f4ea; color: #1a7f37; display: block; }
+  .status.error { background: #fdecea; color: #D7263D; display: block; }
+  .status.pending { background: #eef0f7; color: #1B1B2F; display: block; }
+  #dashboardSection { display: none; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .logout-btn { background: #D7263D; color: #fff; margin-top: 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tab-btn { background: #eee; color: #1B1B2F; margin: 0; }
+  .tab-btn.active { background: #1B1B2F; color: #F5B700; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<div id="loginSection">
+  <h1>FitsAbroad Admin</h1>
+  <div class="card">
+    <label for="loginEmail">Email</label>
+    <input type="email" id="loginEmail">
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword">
+    <button onclick="login()">Log In</button>
+    <div id="loginStatus" class="status"></div>
+  </div>
+</div>
+
+<div id="dashboardSection">
+  <div class="top-bar">
+    <h1>FitsAbroad Admin</h1>
+    <div>
+      <span id="userEmail" style="font-size:0.85rem;color:#666;margin-right:12px;"></span>
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('addStoreTab', this)">Add Store</button>
+    <button class="tab-btn" onclick="showTab('manageStoresTab', this)">Manage Stores</button>
+    <button class="tab-btn" onclick="showTab('addPostTab', this)">Add Post</button>
+    <button class="tab-btn" onclick="showTab('managePostsTab', this)">Manage Posts</button>
+  </div>
+
+  <!-- ADD STORE -->
+  <div id="addStoreTab" class="tab-content active">
+    <div class="card">
+      <h2>Add a New Store</h2>
+      <label for="storeName">Store name</label>
+      <input type="text" id="storeName" oninput="suggestInitials()">
+      <label for="storeInitials">Logo initials</label>
+      <input type="text" id="storeInitials" maxlength="2">
+      <label for="storeDeals">Active deals</label>
+      <input type="number" id="storeDeals" min="1" value="1">
+      <label for="storeTags">Keyword tags (one per line)</label>
+      <textarea id="storeTags" style="min-height:70px;"></textarea>
+      <button onclick="addStore()">Save Store</button>
+      <div id="storeStatus" class="status"></div>
+    </div>
+  </div>
+
+  <!-- MANAGE STORES -->
+  <div id="manageStoresTab" class="tab-content">
+    <div class="card">
+      <h2>Edit or Delete a Store</h2>
+      <label for="storeSelect">Choose a store</label>
+      <select id="storeSelect" onchange="loadStoreForEdit()">
+        <option value="">Loading...</option>
+      </select>
+
+      <div id="editStoreForm" style="display:none;">
+        <label for="editStoreName">Store name</label>
+        <input type="text" id="editStoreName">
+        <label for="editStoreInitials">Logo initials</label>
+        <input type="text" id="editStoreInitials" maxlength="2">
+        <label for="editStoreDeals">Active deals</label>
+        <input type="number" id="editStoreDeals" min="1">
+        <label for="editStoreTags">Keyword tags (one per line)</label>
+        <textarea id="editStoreTags" style="min-height:70px;"></textarea>
+        <button onclick="saveStoreEdit()">Save Changes</button>
+        <button class="danger" onclick="deleteStore()">Delete This Store</button>
+      </div>
+      <div id="manageStoreStatus" class="status"></div>
+    </div>
+  </div>
+
+  <!-- ADD POST -->
+  <div id="addPostTab" class="tab-content">
+    <div class="card">
+      <h2>Add a New Blog Post</h2>
+      <label for="postTitle">Full title</label>
+      <input type="text" id="postTitle">
+      <label for="postCategory">Category</label>
+      <select id="postCategory">
+        <option value="coupon-tips">Coupon Tips</option>
+        <option value="store-guides">Store Guides</option>
+        <option value="savings-hacks">Savings Hacks</option>
+        <option value="trending">Trending</option>
+      </select>
+      <label for="postReadTime">Read time (minutes)</label>
+      <input type="number" id="postReadTime" min="1" value="5">
+      <label for="postDescription">Meta description</label>
+      <textarea id="postDescription" style="min-height:50px;"></textarea>
+      <label for="postExcerpt">Short excerpt (for the home page card)</label>
+      <textarea id="postExcerpt" style="min-height:50px;"></textarea>
+      <label for="postBody">Body — separate paragraphs with a blank line</label>
+      <textarea id="postBody" style="min-height:200px;"></textarea>
+      <button onclick="addPost()">Publish Post</button>
+      <div id="postStatus" class="status"></div>
+    </div>
+  </div>
+
+  <!-- MANAGE POSTS -->
+  <div id="managePostsTab" class="tab-content">
+    <div class="card">
+      <h2>Edit or Delete a Post</h2>
+      <label for="postSelect">Choose a post</label>
+      <select id="postSelect" onchange="loadPostForEdit()">
+        <option value="">Loading...</option>
+      </select>
+
+      <div id="editPostForm" style="display:none;">
+        <label for="editPostTitle">Full title</label>
+        <input type="text" id="editPostTitle">
+        <label for="editPostCategory">Category</label>
+        <select id="editPostCategory">
+          <option value="coupon-tips">Coupon Tips</option>
+          <option value="store-guides">Store Guides</option>
+          <option value="savings-hacks">Savings Hacks</option>
+          <option value="trending">Trending</option>
+        </select>
+        <label for="editPostReadTime">Read time (minutes)</label>
+        <input type="number" id="editPostReadTime" min="1">
+        <label for="editPostDescription">Meta description</label>
+        <textarea id="editPostDescription" style="min-height:50px;"></textarea>
+        <label for="editPostExcerpt">Short excerpt</label>
+        <textarea id="editPostExcerpt" style="min-height:50px;"></textarea>
+        <label for="editPostBody">Body — separate paragraphs with a blank line</label>
+        <textarea id="editPostBody" style="min-height:200px;"></textarea>
+        <button onclick="savePostEdit()">Save Changes</button>
+        <button class="danger" onclick="deletePost()">Delete This Post</button>
+      </div>
+      <div id="managePostStatus" class="status"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // ==== FILL THESE IN with your real Supabase project values ====
+  const SUPABASE_URL = 'https://kwbibfeikpetgghfipfl.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3YmliZmVpa3BldGdnaGZpcGZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NzE2MDEsImV4cCI6MjEwMjM0NzYwMX0.ftHvNcsyUhDMfi3ssCrx_DWWXUNvQ5r3PmOdOwHscfU';
+  const EDGE_FUNCTION_URL = SUPABASE_URL.replace('.supabase.co', '.functions.supabase.co') + '/admin-api';
+  // ================================================================
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const loginSection = document.getElementById('loginSection');
+  const dashboardSection = document.getElementById('dashboardSection');
+  const loginStatus = document.getElementById('loginStatus');
+
+  function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if (tabId === 'manageStoresTab') populateStoreSelect();
+    if (tabId === 'managePostsTab') populatePostSelect();
+  }
+
+  async function checkSession() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) { showDashboard(session); } else {
+      loginSection.style.display = 'block';
+      dashboardSection.style.display = 'none';
+    }
+  }
+  function showDashboard(session) {
+    loginSection.style.display = 'none';
+    dashboardSection.style.display = 'block';
+    document.getElementById('userEmail').textContent = session.user.email;
+  }
+  async function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    loginStatus.className = 'status pending';
+    loginStatus.style.display = 'block';
+    loginStatus.textContent = 'Logging in...';
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) { loginStatus.className = 'status error'; loginStatus.textContent = error.message; return; }
+    loginStatus.style.display = 'none';
+    showDashboard(data.session);
+  }
+  async function logout() { await supabaseClient.auth.signOut(); checkSession(); }
+
+  function suggestInitials() {
+    const name = document.getElementById('storeName').value.trim();
+    const field = document.getElementById('storeInitials');
+    if (!name) return;
+    let initials = '';
+    if (name.includes(' ')) {
+      const words = name.split(' ').filter(Boolean);
+      initials = (words[0][0] || '') + (words[1] ? words[1][0] : '');
+    } else {
+      const capMatch = name.match(/^([A-Z][a-z]*)([A-Z][a-z]*)/);
+      initials = capMatch ? capMatch[1][0] + capMatch[2][0] : name.slice(0, 2);
+    }
+    field.value = initials.toUpperCase();
+  }
+
+  async function callBackend(resource, action, payload) {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) throw new Error('Session expired — please log in again.');
+    const res = await fetch(EDGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify({ resource, action, payload }),
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Something went wrong.');
+    return result;
+  }
+
+  // ---- ADD STORE ----
+  async function addStore() {
+    const statusEl = document.getElementById('storeStatus');
+    const name = document.getElementById('storeName').value.trim();
+    const initials = document.getElementById('storeInitials').value.trim().toUpperCase();
+    const deals = document.getElementById('storeDeals').value.trim();
+    const tags = document.getElementById('storeTags').value.split('\n').map(t => t.trim()).filter(Boolean);
+    if (!name || !initials || !deals || tags.length === 0) {
+      statusEl.className = 'status error'; statusEl.textContent = 'Fill in all fields first.'; return;
+    }
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Saving...';
+    try {
+      const result = await callBackend('store', 'add', { name, initials, deals, tags });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      document.getElementById('storeName').value = '';
+      document.getElementById('storeInitials').value = '';
+      document.getElementById('storeDeals').value = '1';
+      document.getElementById('storeTags').value = '';
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+
+  // ---- MANAGE STORES ----
+  let currentStores = [];
+  async function populateStoreSelect() {
+    const select = document.getElementById('storeSelect');
+    select.innerHTML = '<option value="">Loading...</option>';
+    try {
+      const result = await callBackend('store', 'list', {});
+      currentStores = result.stores;
+      select.innerHTML = '<option value="">-- Select a store --</option>' +
+        currentStores.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+    } catch (err) {
+      select.innerHTML = '<option value="">Error loading stores</option>';
+    }
+  }
+  function loadStoreForEdit() {
+    const id = document.getElementById('storeSelect').value;
+    const form = document.getElementById('editStoreForm');
+    if (!id) { form.style.display = 'none'; return; }
+    // We only have name/deals from list — fetch full details isn't implemented server-side
+    // for stores (tags aren't returned by list), so pre-fill what we have and let them
+    // re-type tags if changing them.
+    const store = currentStores.find(s => s.id === id);
+    document.getElementById('editStoreName').value = store.name;
+    document.getElementById('editStoreInitials').value = '';
+    document.getElementById('editStoreDeals').value = store.deals;
+    document.getElementById('editStoreTags').value = '';
+    form.style.display = 'block';
+    form.dataset.currentId = id;
+  }
+  async function saveStoreEdit() {
+    const statusEl = document.getElementById('manageStoreStatus');
+    const id = document.getElementById('editStoreForm').dataset.currentId;
+    const name = document.getElementById('editStoreName').value.trim();
+    const initials = document.getElementById('editStoreInitials').value.trim().toUpperCase();
+    const deals = document.getElementById('editStoreDeals').value.trim();
+    const tags = document.getElementById('editStoreTags').value.split('\n').map(t => t.trim()).filter(Boolean);
+    if (!name || !initials || !deals || tags.length === 0) {
+      statusEl.className = 'status error'; statusEl.style.display='block'; statusEl.textContent = 'Fill in all fields (including initials and tags again) before saving.'; return;
+    }
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Saving...';
+    try {
+      const result = await callBackend('store', 'edit', { id, name, initials, deals, tags });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      populateStoreSelect();
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+  async function deleteStore() {
+    const id = document.getElementById('editStoreForm').dataset.currentId;
+    if (!confirm('Delete this store permanently?')) return;
+    const statusEl = document.getElementById('manageStoreStatus');
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Deleting...';
+    try {
+      const result = await callBackend('store', 'delete', { id });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      document.getElementById('editStoreForm').style.display = 'none';
+      populateStoreSelect();
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+
+  // ---- ADD POST ----
+  async function addPost() {
+    const statusEl = document.getElementById('postStatus');
+    const title = document.getElementById('postTitle').value.trim();
+    const category = document.getElementById('postCategory').value;
+    const readTime = document.getElementById('postReadTime').value.trim();
+    const description = document.getElementById('postDescription').value.trim();
+    const excerpt = document.getElementById('postExcerpt').value.trim();
+    const body = document.getElementById('postBody').value.trim();
+    if (!title || !description || !excerpt || !body) {
+      statusEl.className = 'status error'; statusEl.style.display='block'; statusEl.textContent = 'Fill in all fields first.'; return;
+    }
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Publishing...';
+    try {
+      const result = await callBackend('post', 'add', { title, category, readTime, description, excerpt, body });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postDescription').value = '';
+      document.getElementById('postExcerpt').value = '';
+      document.getElementById('postBody').value = '';
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+
+  // ---- MANAGE POSTS ----
+  async function populatePostSelect() {
+    const select = document.getElementById('postSelect');
+    select.innerHTML = '<option value="">Loading...</option>';
+    try {
+      const result = await callBackend('post', 'list', {});
+      select.innerHTML = '<option value="">-- Select a post --</option>' +
+        result.posts.map(p => `<option value="${p.id}">${p.title}</option>`).join('');
+    } catch (err) {
+      select.innerHTML = '<option value="">Error loading posts</option>';
+    }
+  }
+  async function loadPostForEdit() {
+    const id = document.getElementById('postSelect').value;
+    const form = document.getElementById('editPostForm');
+    const statusEl = document.getElementById('managePostStatus');
+    if (!id) { form.style.display = 'none'; return; }
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Loading post...';
+    try {
+      const result = await callBackend('post', 'get', { id });
+      const post = result.post;
+      document.getElementById('editPostTitle').value = post.title;
+      document.getElementById('editPostCategory').value = post.category;
+      document.getElementById('editPostReadTime').value = post.readTime;
+      document.getElementById('editPostDescription').value = post.description;
+      document.getElementById('editPostExcerpt').value = ''; // not stored on the page itself, re-enter if changing
+      document.getElementById('editPostBody').value = post.body;
+      form.style.display = 'block';
+      form.dataset.currentId = id;
+      statusEl.style.display = 'none';
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+  async function savePostEdit() {
+    const statusEl = document.getElementById('managePostStatus');
+    const id = document.getElementById('editPostForm').dataset.currentId;
+    const title = document.getElementById('editPostTitle').value.trim();
+    const category = document.getElementById('editPostCategory').value;
+    const readTime = document.getElementById('editPostReadTime').value.trim();
+    const description = document.getElementById('editPostDescription').value.trim();
+    const excerpt = document.getElementById('editPostExcerpt').value.trim();
+    const body = document.getElementById('editPostBody').value.trim();
+    if (!title || !description || !excerpt || !body) {
+      statusEl.className = 'status error'; statusEl.style.display='block';
+      statusEl.textContent = 'Fill in all fields, including excerpt (it\'s not pre-filled since it only lives on the home page card, not the post itself).';
+      return;
+    }
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Saving...';
+    try {
+      const result = await callBackend('post', 'edit', { id, title, category, readTime, description, excerpt, body });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      populatePostSelect();
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+  async function deletePost() {
+    const id = document.getElementById('editPostForm').dataset.currentId;
+    if (!confirm('Delete this post permanently? This removes the page, its home page card, and its sitemap entry.')) return;
+    const statusEl = document.getElementById('managePostStatus');
+    statusEl.className = 'status pending'; statusEl.style.display = 'block'; statusEl.textContent = 'Deleting...';
+    try {
+      const result = await callBackend('post', 'delete', { id });
+      statusEl.className = 'status success'; statusEl.textContent = result.message;
+      document.getElementById('editPostForm').style.display = 'none';
+      populatePostSelect();
+    } catch (err) { statusEl.className = 'status error'; statusEl.textContent = err.message; }
+  }
+
+  checkSession();
+</script>
+
+</body>
+</html>
