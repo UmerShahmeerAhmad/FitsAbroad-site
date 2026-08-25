@@ -415,6 +415,26 @@ h1, h2, h3, .logo {
   text-align: center;
 }
 
+.store-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.store-visit-link {
+  color: #666;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.store-visit-link:hover {
+  color: var(--crimson);
+}
+
 .store-logo {
   width: 56px;
   height: 56px;
