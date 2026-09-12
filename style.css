@@ -10,8 +10,10 @@
   --crimson: #D7263D;
   --navy: #1B1B2F;
   --cream: #FFF8E7;
-  --font-display: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --clay: #C18C5D;
+  --moss: #5D7052;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Nunito', sans-serif;
   --font-mono: 'Space Mono', monospace;
 }
 
@@ -1234,4 +1236,63 @@ body.dark-mode .recently-viewed-chip {
   .hero-search {
     flex-direction: column;
   }
+}
+
+/* =========================================
+   ORGANIC ACCENTS — blend, not replace
+   Append this entire block to the end of style.css
+   ========================================= */
+
+/* Warmer, clay-tinted shadows on cards (shapes/notches untouched) */
+.blog-card, .store-card, .category-card, .form-card {
+  box-shadow: 0 4px 18px -4px rgba(193, 140, 93, 0.18);
+}
+.blog-card:hover, .store-card:hover, .category-card:hover {
+  box-shadow: 0 14px 30px -8px rgba(193, 140, 93, 0.24);
+}
+.coupon-card {
+  box-shadow: 0 4px 18px -4px rgba(193, 140, 93, 0.14);
+}
+.coupon-card:hover {
+  box-shadow: 0 14px 28px -6px rgba(193, 140, 93, 0.2);
+}
+
+/* Slightly softer button corners */
+.btn {
+  border-radius: 10px;
+}
+
+/* Decorative organic blobs — purely visual, sit behind content, never interactive */
+.hero, .blog-intro, .page-header, .article-header {
+  position: relative;
+  overflow: hidden;
+}
+.hero .hero-inner, .hero-inner,
+.blog-intro .container,
+.page-header .container,
+.article-header .container {
+  position: relative;
+  z-index: 1;
+}
+.organic-blob {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: blur(50px);
+  opacity: 0.18;
+  z-index: 0;
+  pointer-events: none;
+}
+.organic-blob-clay {
+  width: 260px;
+  height: 260px;
+  background: var(--clay);
+  top: -70px;
+  left: -60px;
+}
+.organic-blob-moss {
+  width: 200px;
+  height: 200px;
+  background: var(--moss);
+  bottom: -60px;
+  right: -50px;
 }
