@@ -1184,10 +1184,10 @@ body.dark-mode .recently-viewed-chip {
 
 /* Store logo image (replaces the initials circle when a real logo is uploaded) */
 .store-logo-img {
-  width: 56px;
+  max-width: 140px;
   height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: auto;
+  object-fit: contain;
   margin: 0 auto 1rem;
   display: block;
 }
