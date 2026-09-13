@@ -34,6 +34,30 @@ if (heroSearchForm) {
       : 'deals.html';
   });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedStore = urlParams.get('store')?.toLowerCase(); // Convert URL param to lowercase
+
+  if (selectedStore && document.getElementById('dealsGrid')) {
+    const deals = document.querySelectorAll('.coupon-card');
+    let hasMatches = false;
+
+    deals.forEach(deal => {
+      const storeId = deal.getAttribute('data-store')?.toLowerCase(); // Convert data-store to lowercase
+      if (storeId === selectedStore) {
+        deal.style.display = 'block';
+        hasMatches = true;
+      } else {
+        deal.style.display = 'none';
+      }
+    });
+
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    if (noResultsMsg) {
+      noResultsMsg.style.display = hasMatches ? 'none' : 'block';
+    }
+  }
+});
 
 /* =========================================
    COOKIE HELPERS (shared by consent, theme, and recently-viewed features)
