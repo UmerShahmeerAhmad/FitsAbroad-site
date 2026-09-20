@@ -34,30 +34,7 @@ if (heroSearchForm) {
       : 'deals.html';
   });
 }
-document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const selectedStore = urlParams.get('store')?.toLowerCase(); // Convert URL param to lowercase
 
-  if (selectedStore && document.getElementById('dealsGrid')) {
-    const deals = document.querySelectorAll('.coupon-card');
-    let hasMatches = false;
-
-    deals.forEach(deal => {
-      const storeId = deal.getAttribute('data-store')?.toLowerCase(); // Convert data-store to lowercase
-      if (storeId === selectedStore) {
-        deal.style.display = 'block';
-        hasMatches = true;
-      } else {
-        deal.style.display = 'none';
-      }
-    });
-
-    const noResultsMsg = document.getElementById('noResultsMsg');
-    if (noResultsMsg) {
-      noResultsMsg.style.display = hasMatches ? 'none' : 'block';
-    }
-  }
-});
 
 /* =========================================
    COOKIE HELPERS (shared by consent, theme, and recently-viewed features)
@@ -101,6 +78,11 @@ revealButtons.forEach((btn) => {
       btn.textContent = code;
       copyText();
       flashCopied(btn, code);
+      const dealCard = btn.closest('.coupon-card');
+      const storeUrl = dealCard ? dealCard.getAttribute('data-url') : null;
+      if (storeUrl) {
+        window.open(storeUrl, '_blank', 'noopener');
+      }
 
       const card = btn.closest('.coupon-card');
       if (card) {
@@ -128,6 +110,8 @@ const noResultsMsg = document.getElementById('noResultsMsg');
 
 if (dealsGrid) {
   const allCards = Array.from(dealsGrid.querySelectorAll('.coupon-card'));
+  const storeUrlParams = new URLSearchParams(window.location.search);
+  const storeFilter = storeUrlParams.get('store') ? storeUrlParams.get('store').toLowerCase() : null;
 
   function parseDiscountValue(card) {
     const el = card.querySelector('.coupon-discount');
@@ -154,7 +138,9 @@ if (dealsGrid) {
     let visibleCount = 0;
 
     allCards.forEach((card) => {
-      const matches = activeCategory === 'all' || card.getAttribute('data-category') === activeCategory;
+      const categoryMatches = activeCategory === 'all' || card.getAttribute('data-category') === activeCategory;
+      const storeMatches = !storeFilter || (card.getAttribute('data-store') || '').toLowerCase() === storeFilter;
+      const matches = categoryMatches && storeMatches;
       card.style.display = matches ? '' : 'none';
       if (matches) visibleCount += 1;
     });

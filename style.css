@@ -1296,3 +1296,88 @@ body.dark-mode .recently-viewed-chip {
   bottom: -60px;
   right: -50px;
 }
+
+/* ===== Deal card badges + code button (matches store-page deal cards) ===== */
+.coupon-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge-featured {
+  background-color: #F5B700;
+  color: #1B1B2F;
+}
+
+.badge-code {
+  background-color: transparent;
+  color: #1B1B2F;
+  border: 1.5px solid #1B1B2F;
+}
+
+.badge-category {
+  background-color: transparent;
+  color: #6b6b6b;
+  font-weight: 500;
+  text-transform: none;
+  padding: 3px 0;
+}
+
+.coupon-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1B1B2F;
+  margin: 6px 0;
+}
+
+.coupon-card .coupon-desc {
+  color: #6b6b6b;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.coupon-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.coupon-code-mask {
+  font-family: 'Space Mono', monospace;
+  border: 1.5px dashed #1B1B2F;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  color: #1B1B2F;
+  letter-spacing: 0.05em;
+}
+
+.coupon-card .btn-reveal {
+  background-color: #1B1B2F;
+  color: #FFF8E7;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.coupon-card .btn-reveal:hover {
+  opacity: 0.9;
+}
