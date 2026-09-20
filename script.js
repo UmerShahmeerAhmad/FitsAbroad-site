@@ -104,6 +104,41 @@ revealButtons.forEach((btn) => {
 
 /* ---------- 5. Deals page: category filter + sort ---------- */
 const dealsGrid = document.getElementById('dealsGrid');
+/* ---------- 4b. Auto-generate Offer schema from existing deal cards ---------- */
+if (document.getElementById('dealsGrid')) {
+  const cardsForSchema = document.querySelectorAll('#dealsGrid .coupon-card');
+  const offersList = [];
+
+  cardsForSchema.forEach((card, index) => {
+    const titleEl = card.querySelector('.coupon-title');
+    const descEl = card.querySelector('.coupon-desc');
+    const category = card.getAttribute('data-category') || '';
+    const url = card.getAttribute('data-url') || '';
+
+    if (titleEl) {
+      offersList.push({
+        "@type": "Offer",
+        "position": index + 1,
+        "name": titleEl.textContent.trim(),
+        "description": descEl ? descEl.textContent.trim() : '',
+        "url": url,
+        "category": category
+      });
+    }
+  });
+
+  if (offersList.length > 0) {
+    const offersSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": offersList
+    };
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.textContent = JSON.stringify(offersSchema);
+    document.head.appendChild(schemaScript);
+  }
+}
 const categoryFilters = document.getElementById('categoryFilters');
 const sortSelect = document.getElementById('sortSelect');
 const noResultsMsg = document.getElementById('noResultsMsg');

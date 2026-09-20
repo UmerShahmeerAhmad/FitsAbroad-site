@@ -1,0 +1,9 @@
+# FitsAbroad
+
+> FitsAbroad is a coupon and deals aggregator plus blog covering travel, fashion, and lifestyle brands. It publishes verified discount codes, store directories, and buying guides.
+
+## Key pages
+- [Deals](https://fitsabroad.com/deals.html): Current coupon codes and offers
+- [Stores](https://fitsabroad.com/stores.html): Directory of participating stores
+- [Categories](https://fitsabroad.com/categories.html): Browse deals by category
+- [About](https://fitsabroad.com/about.html): About FitsAbroad
