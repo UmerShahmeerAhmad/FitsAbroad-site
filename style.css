@@ -1381,3 +1381,670 @@ body.dark-mode .recently-viewed-chip {
 .coupon-card .btn-reveal:hover {
   opacity: 0.9;
 }
+
+/* =========================================
+   STAGE 4 — PROFESSIONAL POLISH & INTERACTION
+   Refines shadow/gradient/motion language site-wide without
+   touching markup or renaming any existing class.
+   Every rule below shares specificity with — and so overrides —
+   the equivalent rule above it in the cascade.
+   ========================================= */
+
+:root {
+  --gold-deep: #d99e00;
+  --crimson-deep: #a91c2c;
+  --crimson-bright: #ef3350;
+  --navy-soft: #2a2a45;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --shadow-card: 0 1px 2px rgba(27, 27, 47, 0.06), 0 8px 24px -8px rgba(193, 140, 93, 0.28);
+  --shadow-card-hover: 0 4px 8px rgba(27, 27, 47, 0.08), 0 20px 40px -12px rgba(193, 140, 93, 0.34);
+  --shadow-pop: 0 2px 4px rgba(27, 27, 47, 0.12), 0 12px 28px -8px rgba(27, 27, 47, 0.28);
+  --ring: 0 0 0 3px rgba(245, 183, 0, 0.45);
+}
+
+/* Respect people who've asked for less motion, before anything else */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* GLOBAL FEEL — selection, scroll, scrollbar, universal focus ring */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clay);
+  border-radius: 999px;
+  border: 3px solid var(--cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--crimson);
+}
+
+a, button, input, textarea, select, .chip, .chip-filter, .category-card, .coupon-card,
+.blog-card, .store-card, [tabindex] {
+  outline-offset: 2px;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
+select:focus-visible, .chip:focus-visible, .chip-filter:focus-visible,
+.category-card:focus-visible, .coupon-card:focus-visible, .blog-card:focus-visible,
+.store-card:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* NAVBAR — glassy strip, animated brand mark, sweeping link underline */
+.site-header {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+.logo {
+  background: linear-gradient(100deg, var(--navy) 40%, var(--crimson) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: letter-spacing 0.25s var(--ease-out);
+}
+
+.logo:hover {
+  letter-spacing: 0.01em;
+}
+
+.logo-accent {
+  -webkit-text-fill-color: var(--crimson);
+}
+
+.nav-links a {
+  transition: color 0.2s ease;
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.28s var(--ease-out);
+}
+
+.nav-links a:hover {
+  color: var(--crimson);
+}
+
+.nav-links a:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-links a.active::after {
+  height: 3px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold));
+}
+
+.hamburger span {
+  transition: transform 0.25s var(--ease-out), opacity 0.2s ease;
+}
+
+.hamburger:hover span {
+  background: var(--crimson);
+}
+
+/* HERO — deeper depth, gradient-carved headline, glowing search focus */
+.hero h1,
+.blog-intro h1 {
+  background: linear-gradient(115deg, var(--navy) 55%, var(--crimson-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-eyebrow {
+  box-shadow: 0 2px 6px rgba(26, 127, 55, 0.18);
+}
+
+.hero-search input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-search input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: var(--ring);
+}
+
+.trust-badges span,
+.trust-badges > * {
+  transition: color 0.2s ease;
+}
+
+/* BUTTONS — gradients, sheen sweep, springier press */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s var(--ease-spring), box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
+  transform: translateX(-120%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+
+.btn:hover::after {
+  transform: translateX(120%);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--crimson-bright), var(--crimson-deep));
+  box-shadow: 0 4px 14px -4px rgba(215, 38, 61, 0.55);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--crimson-bright), var(--crimson));
+  box-shadow: 0 8px 22px -6px rgba(215, 38, 61, 0.6);
+}
+
+.btn-ghost {
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.18s var(--ease-spring), box-shadow 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--crimson);
+  box-shadow: 0 6px 16px -6px rgba(27, 27, 47, 0.35);
+}
+
+.btn-reveal {
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+}
+
+.btn-reveal:hover {
+  box-shadow: 0 6px 18px -6px rgba(245, 183, 0, 0.5);
+}
+
+.btn-reveal.revealed {
+  background: linear-gradient(135deg, #1a7f37, #146129);
+  animation: revealPop 0.4s var(--ease-spring);
+}
+
+.coupon-card .btn-reveal {
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  transition: transform 0.18s var(--ease-spring), box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.coupon-card .btn-reveal:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(27, 27, 47, 0.4);
+}
+
+@keyframes revealPop {
+  0% { transform: scale(0.94); }
+  60% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* CHIPS — springier fill, gentle lift */
+.chip, .chip-filter {
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s var(--ease-spring), box-shadow 0.2s ease;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -4px rgba(245, 183, 0, 0.45);
+}
+
+.chip-filter.active {
+  box-shadow: 0 4px 12px -3px rgba(27, 27, 47, 0.4);
+}
+
+/* COUPON CARDS — gradient rim, glossy sweep, deeper lift */
+.coupon-card {
+  box-shadow: var(--shadow-card);
+}
+
+.coupon-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.coupon-card::before,
+.coupon-card::after {
+  box-shadow: inset 0 0 0 1px rgba(27, 27, 47, 0.06), 0 1px 3px rgba(27, 27, 47, 0.08);
+}
+
+.coupon-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.coupon-card::marker,
+.coupon-badges {
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  transition: transform 0.15s var(--ease-spring);
+}
+
+.badge-featured {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  box-shadow: 0 2px 8px -2px rgba(245, 183, 0, 0.6);
+}
+
+.coupon-card:hover .badge-featured {
+  animation: badgeGlow 1.6s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 2px 8px -2px rgba(245, 183, 0, 0.6); }
+  50% { box-shadow: 0 2px 14px -1px rgba(245, 183, 0, 0.9); }
+}
+
+.coupon-code-mask {
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.coupon-card:hover .coupon-code-mask {
+  border-color: var(--crimson);
+  color: var(--crimson);
+}
+
+/* CATEGORY + STORE CARDS — refined lift, icon/logo micro-interaction */
+.category-card,
+.store-card {
+  transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), border-color 0.22s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.category-card:hover,
+.store-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.category-card:hover {
+  border-color: var(--crimson);
+}
+
+.category-icon {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.category-card:hover .category-icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+.store-logo {
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.store-card:hover .store-logo {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.store-logo-img {
+  transition: transform 0.25s var(--ease-out);
+}
+
+.store-card:hover .store-logo-img {
+  transform: scale(1.05);
+}
+
+.store-tag {
+  transition: transform 0.15s var(--ease-spring), background 0.2s ease;
+}
+
+.store-card:hover .store-tag {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* CTA BAND — gradient wash, subtle animated sheen */
+.cta {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 55%, #23233a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 30% 30%, rgba(245, 183, 0, 0.12), transparent 55%),
+              radial-gradient(circle at 75% 70%, rgba(215, 38, 61, 0.14), transparent 50%);
+  pointer-events: none;
+}
+
+.cta > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cta .btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  box-shadow: 0 6px 18px -6px rgba(245, 183, 0, 0.55);
+}
+
+.cta .btn-primary:hover {
+  box-shadow: 0 10px 24px -6px rgba(245, 183, 0, 0.7);
+}
+
+/* STATS — gradient counters that lift on hover */
+.stats-section {
+  background: linear-gradient(160deg, var(--navy), var(--navy-soft));
+}
+
+.stat-number {
+  background: linear-gradient(120deg, var(--gold), #ffd868);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.2s var(--ease-spring);
+  display: inline-block;
+}
+
+.stats-grid > div:hover .stat-number,
+.stats-grid > * :hover .stat-number {
+  transform: scale(1.06);
+}
+
+/* FEATURED POST + BLOG CARDS — gradient depth, image zoom */
+.featured-post {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+  box-shadow: var(--shadow-pop);
+}
+
+.featured-post .blog-tag {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+}
+
+.featured-post .ticket-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.featured-post .ticket-link::after {
+  content: '\2192';
+  display: inline-block;
+  margin-left: 0.35em;
+  transition: transform 0.2s var(--ease-out);
+}
+
+.featured-post .ticket-link:hover::after {
+  transform: translateX(4px);
+}
+
+.blog-card {
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.blog-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.blog-card-thumb {
+  transition: transform 0.35s var(--ease-out);
+}
+
+.blog-card:hover .blog-card-thumb {
+  transform: scale(1.06);
+}
+
+.blog-tag {
+  transition: transform 0.15s var(--ease-spring);
+}
+
+/* ARTICLE PAGES — smoother back-link, glowing CTA */
+.back-link {
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s var(--ease-out);
+}
+
+.back-link:hover {
+  transform: translateX(-3px);
+}
+
+.article-cta {
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  box-shadow: var(--shadow-pop);
+}
+
+.related-posts li {
+  transition: padding-left 0.2s var(--ease-out);
+}
+
+.related-posts li:hover {
+  padding-left: 0.35rem;
+}
+
+/* FORMS — glowing focus states, tidy validity feedback */
+.form-card {
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.25s var(--ease-out);
+}
+
+.form-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.form-card input,
+.form-card textarea {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-card input:focus,
+.form-card textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: var(--ring);
+}
+
+.form-card input:invalid:not(:placeholder-shown) {
+  border-color: var(--crimson);
+}
+
+.form-status.success::before {
+  content: '\2713  ';
+}
+
+.form-status.error::before {
+  content: '\26A0  ';
+}
+
+/* FOOTER — gradient hairline, lively links */
+.site-footer {
+  position: relative;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--crimson), var(--gold), var(--moss));
+}
+
+.footer-links a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--crimson);
+}
+
+/* COOKIE BANNER — entrance motion */
+.cookie-banner {
+  animation: cookieSlideUp 0.4s var(--ease-out);
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+}
+
+@keyframes cookieSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.cookie-banner .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* RECENTLY VIEWED — chip micro-interaction */
+.recently-viewed-chip {
+  display: inline-block;
+  transition: transform 0.15s var(--ease-spring), background 0.2s ease, color 0.2s ease;
+}
+
+.recently-viewed-chip:hover {
+  transform: translateY(-2px);
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* THEME TOGGLE — a satisfying little spin */
+.theme-toggle {
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.theme-toggle:hover {
+  transform: rotate(18deg) scale(1.1);
+}
+
+/* SKELETON / LOADING SHIMMER — optional utility for async deal & image loading */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #ece4d0;
+  border-radius: 8px;
+  color: transparent !important;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* DARK MODE — bring the Stage 4 language into dark surfaces too */
+body.dark-mode .site-header {
+  background: rgba(27, 27, 47, 0.86);
+}
+
+body.dark-mode .logo {
+  background: linear-gradient(100deg, #e8e8f0 40%, var(--crimson-bright) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+body.dark-mode .hero h1,
+body.dark-mode .blog-intro h1 {
+  background: linear-gradient(115deg, #f4f1e8 55%, var(--crimson-bright) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+body.dark-mode .blog-card,
+body.dark-mode .coupon-card,
+body.dark-mode .store-card,
+body.dark-mode .category-card,
+body.dark-mode .form-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px -10px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .blog-card:hover,
+body.dark-mode .coupon-card:hover,
+body.dark-mode .store-card:hover,
+body.dark-mode .category-card:hover,
+body.dark-mode .form-card:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 18px 36px -10px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .skeleton {
+  background: #26263a;
+}
+
+body.dark-mode .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #1b1b2f;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--navy-soft);
+  border-color: #1b1b2f;
+}
+
+/* MOBILE REFINEMENTS — smoother menu reveal */
+@media (max-width: 700px) {
+  .nav-links {
+    animation: menuDrop 0.22s var(--ease-out);
+    box-shadow: 0 12px 24px -8px rgba(27, 27, 47, 0.18);
+  }
+
+  @keyframes menuDrop {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .coupon-card:hover,
+  .category-card:hover,
+  .store-card:hover,
+  .blog-card:hover {
+    transform: none;
+  }
+}
